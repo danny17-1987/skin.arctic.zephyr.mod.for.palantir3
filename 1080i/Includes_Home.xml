@@ -4272,12 +4272,12 @@
                 <orientation>horizontal</orientation>
                 <height>36</height>
                 <usecontrolcoords>true</usecontrolcoords>
-                <control type="label">
+                <control type="label"> <!-- año de la peli en menu home-->
                     <include>MultiWidgetsSubLabelDefinition</include>
                     <label>$INFO[Container($PARAM[id]).ListItem.Year,,  •  ]</label>
                     <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Year)</visible>
                 </control>
-                <control type="label">
+                <control type="label"> <!-- duracion de la peli en menu home-->
                     <include>MultiWidgetsSubLabelDefinition</include>
                     <label>$INFO[Container($PARAM[id]).ListItem.Episode,, $LOCALIZE[20360]]</label>
                     <visible>!String.IsEmpty(Container($PARAM[id]).ListItem.Episode)</visible>
@@ -4292,7 +4292,7 @@
                     <label>$INFO[Container($PARAM[id]).ListItem.UserRating,  •  ,.0]$VAR[RtMclabel]</label>
                     <visible>Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) + Skin.HasSetting(userrating.override.rating)</visible>
                 </control>
-                <control type="label">
+                <control type="label"> <!-- rating del menu home-->
                     <include>MultiWidgetsSubLabelDefinition</include>
                     <label>$INFO[Container($PARAM[id]).ListItem.Rating,  •  ]$VAR[RtMclabel]</label>
                     <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) | !Skin.HasSetting(userrating.override.rating)</visible>
@@ -4300,6 +4300,18 @@
                 <include content="IndicatorTvShowsCleanHome" condition="!Skin.HasSetting(hide.markers) + Skin.HasSetting(homemenu.clean.flix)">
                     <param name="id" value="$PARAM[id]" />
                 </include>
+                <!--añado un imagen para el rating bonito tmdb-->
+                <control type="image" description="Tmdb_Rating">
+                    <visible>!Integer.IsGreater(Container($PARAM[id]).ListItem.UserRating,0) | !Skin.HasSetting(userrating.override.rating)</visible>
+                    <fadetime>ExtendedFlagIconsFadetime</fadetime>
+                    <centertop>10%</centertop>
+                    <width>52</width>
+                    <height>32</height>
+                    <top>10</top>
+                    <left>1350</left>
+                    <texture colordiffuse="Dark1" background="true">flags/ratings/tmdb.png</texture>
+                </control>
+                <!--fin añado un imagen para el ratin bonito tmdb--> 
             </control>
             
             <!-- Movies -->
@@ -4464,6 +4476,31 @@
                 <visible>String.StartsWith(Container($PARAM[id]).ListItem.FolderPath,pvr://)</visible>
             </control>
         </control>
+        <!-- genero en menu home-->
+        <control type="label"> 
+            <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie)</visible>
+            <orientation>horizontal</orientation>
+            <font>Tiny</font>
+            <centertop>50%</centertop>
+            <width>auto</width>
+            <height>70</height>
+            <align>left</align>
+            <textcolor>Dark2</textcolor>
+            <label>Genero: $INFO[ListItem.Genre]</label>
+        </control>
+        <control type="label"> 
+            <visible>String.IsEqual(Container($PARAM[id]).ListItem.DBType,movie)</visible>
+            <orientation>horizontal</orientation>
+            <centertop>20%</centertop>
+            <font>Tiny</font>
+            <width>auto</width>
+            <height>0</height>
+            <align>left</align>
+            <textcolor>Dark2</textcolor>
+            <label>Resolucion: $INFO[ListItem.VideoResolution]</label>
+        </control>
+        
+<!-- fin genero en menu home-->
     </include>
 
     <include name="ClearArtInfoSub">
